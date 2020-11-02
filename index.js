@@ -1,35 +1,40 @@
 const random = (from, to) => Math.floor(Math.random() * (to - from) + from);
-const idGenerator = (options) => {
+const idGenerator = ({
+  prefix,
+  suffix,
+  numbers,
+  uppercase,
+  lowercase = true,
+  length,
+}) => {
   // DEAFULT
-  options.preId = options.preId ? options.preId : "";
-  options.postId = options.postId ? options.postId : "";
+  prefix = prefix ? prefix : "";
+  suffix = suffix ? suffix : "";
   // ERRORS
   // valid length
-  if (
-    !options.length ||
-    options.length <= 0 ||
-    typeof options.length !== "number"
-  )
-    throw new Error("specify a valid length");
-  // valid preId and postId
-  if (typeof options.preId !== "string")
-    throw new Error("value of option preId must be a string type");
-  if (typeof options.postId !== "string")
-    throw new Error("value of option postId must be a string type");
+  if (!length) throw new Error("specify a length");
+  if (length <= 0) throw new Error("length must not be equal or lower than 0");
+  if (typeof length !== "number")
+    throw new Error("type of property length is number");
+  // valid prefix and suffix
+  if (typeof prefix !== "string")
+    throw new Error("type of property prefix is string");
+  if (typeof suffix !== "string")
+    throw new Error("type of property suffix is string");
   // valid keySets
-  if (options.number !== undefined && typeof options.number !== "boolean")
-    throw new Error("value of option number must be a boolean type");
-  if (options.uppercase !== undefined && typeof options.uppercase !== "boolean")
-    throw new Error("value of option uppercase must be a boolean type");
-  if (options.lowercase !== undefined && typeof options.lowercase !== "boolean")
-    throw new Error("value of option lowercase must be a boolean type");
+  if (numbers !== undefined && typeof numbers !== "boolean")
+    throw new Error("type of property number is boolean");
+  if (uppercase !== undefined && typeof uppercase !== "boolean")
+    throw new Error("type of property uppercase is boolean");
+  if (lowercase !== undefined && typeof lowercase !== "boolean")
+    throw new Error("type of property lowercase is boolean");
   // at least one specified keyset
-  if (!Object.values(options).includes(true))
+  if (lowercase !== true && uppercase !== true && numbers !== true)
     throw new Error(
       "you should specify at least one key set to generate an ID"
     );
   // KEYSETS
-  const lowercase = [
+  const lowercaseKeys = [
     "q",
     "w",
     "e",
@@ -57,20 +62,20 @@ const idGenerator = (options) => {
     "n",
     "m",
   ];
-  const uppercase = lowercase.map((el) => el.toUpperCase());
-  const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const uppercaseKeys = lowercaseKeys.map((el) => el.toUpperCase());
+  const numberKeys = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const keySets = [];
   // push specified keys to the array
-  if (options.lowercase) keySets.push(lowercase);
-  if (options.uppercase) keySets.push(uppercase);
-  if (options.numbers) keySets.push(numbers);
+  if (lowercase) keySets.push(lowercaseKeys);
+  if (uppercase) keySets.push(uppercaseKeys);
+  if (numbers) keySets.push(numberKeys);
   // GENERATE
-  let id = `${options.preId}`;
-  for (let i = 0; i < options.length; i++) {
+  let hash = `${prefix}`;
+  for (let i = 0; i < length; i++) {
     const keys = keySets[random(0, keySets.length)];
-    id += keys[random(0, keys.length)];
+    hash += keys[random(0, keys.length)];
   }
-  id = `${id}${options.postId}`;
-  return id;
+  hash += suffix;
+  return hash;
 };
 module.exports = idGenerator;
