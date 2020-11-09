@@ -1,8 +1,16 @@
 {
   "name": "id-a-generator",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "generate your custom id ",
-  "keywords": ["javascript","nodejs","id","id generator","id-generator","id-a-generator","devamirgh"],
+  "keywords": [
+    "javascript",
+    "nodejs",
+    "id",
+    "id generator",
+    "id-generator",
+    "id-a-generator",
+    "devamirgh"
+  ],
   "main": "index.js",
   "scripts": {
     "watch:js": "esw --fix --watch --ext .js"
