@@ -1,13 +1,15 @@
 const random = (from, to) => Math.floor(Math.random() * (to - from) + from);
-const idGenerator = ({
-  prefix,
-  suffix,
-  numbers,
-  uppercase,
-  lowercase = true,
-  length,
-}) => {
+const idGenerator = (config) => {
   // DEAFULT
+  let {
+    prefix,
+    suffix,
+    numbers,
+    uppercase,
+    lowercase = true,
+    hashes,
+    length,
+  } = config;
   prefix = prefix ? prefix : "";
   suffix = suffix ? suffix : "";
   // ERRORS
@@ -28,6 +30,17 @@ const idGenerator = ({
     throw new Error("type of property uppercase is boolean");
   if (lowercase !== undefined && typeof lowercase !== "boolean")
     throw new Error("type of property lowercase is boolean");
+  // valid hashes
+  if (hashes) {
+    if (typeof hashes !== "string" && !Array.isArray(hashes))
+      throw new Error(
+        "type of property hashes must be string or an array of strings"
+      );
+    if (Array.isArray(hashes)) {
+      if (!hashes.every((el) => typeof el === "string"))
+        throw new Error("array hashes must include only string elements");
+    }
+  }
   // at least one specified keyset
   if (lowercase !== true && uppercase !== true && numbers !== true)
     throw new Error(
@@ -76,6 +89,11 @@ const idGenerator = ({
     hash += keys[random(0, keys.length)];
   }
   hash += suffix;
+  if (typeof hashes === "string") {
+    if (hash === hashes) return idGenerator(config);
+  } else {
+    if (hashes.includes(hash)) return idGenerator(config);
+  }
   return hash;
 };
 module.exports = idGenerator;
