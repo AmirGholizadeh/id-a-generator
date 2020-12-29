@@ -25,7 +25,7 @@ const idGenerator = (config) => {
     throw new Error("type of property suffix is string");
   // valid keySets
   if (numbers !== undefined && typeof numbers !== "boolean")
-    throw new Error("type of property number is boolean");
+    throw new Error("type of property numbers is boolean");
   if (uppercase !== undefined && typeof uppercase !== "boolean")
     throw new Error("type of property uppercase is boolean");
   if (lowercase !== undefined && typeof lowercase !== "boolean")
