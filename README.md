@@ -9,7 +9,7 @@ first of all import/require it in your code, then use it as following : ``` idGe
 2. ``` uppercase ``` needs a boolean value to get the function to use uppercase keyset too.
 3. ``` lowercase ``` same as uppercase but is set to true by default. 
 4. ``` numbers ``` same.
-5. ``` preffix ``` add a string to the beginning of the ID.
+5. ``` prefix ``` add a string to the beginning of the ID.
 6. ``` suffix ``` add a string to the ending of the ID.
 7. ``` hashes ``` a string or an array of strings. check if the generated hash is already in hashes array and if it's is generate a new one.
 8. ``` count ``` the number of hashes you want to generate. returns one string by default.
