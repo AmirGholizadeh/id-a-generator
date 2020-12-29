@@ -89,10 +89,12 @@ const idGenerator = (config) => {
     hash += keys[random(0, keys.length)];
   }
   hash += suffix;
-  if (typeof hashes === "string") {
-    if (hash === hashes) return idGenerator(config);
-  } else {
-    if (hashes.includes(hash)) return idGenerator(config);
+  if (hashes) {
+    if (typeof hashes === "string") {
+      if (hash === hashes) return idGenerator(config);
+    } else {
+      if (hashes.includes(hash)) return idGenerator(config);
+    }
   }
   return hash;
 };
