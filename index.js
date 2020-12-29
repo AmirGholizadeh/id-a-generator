@@ -9,6 +9,7 @@ const idGenerator = (config) => {
     lowercase = true,
     hashes,
     length,
+    count,
   } = config;
   prefix = prefix ? prefix : "";
   suffix = suffix ? suffix : "";
@@ -46,6 +47,11 @@ const idGenerator = (config) => {
     throw new Error(
       "you should specify at least one key set to generate an ID"
     );
+  // valid count
+  if (count && typeof count !== "number")
+    throw new Error("type of property count is number");
+  if (count && count <= 0)
+    throw new Error("count must not be equal or lower than 0");
   // KEYSETS
   const lowercaseKeys = [
     "q",
@@ -83,17 +89,47 @@ const idGenerator = (config) => {
   if (uppercase) keySets.push(uppercaseKeys);
   if (numbers) keySets.push(numberKeys);
   // GENERATE
-  let hash = `${prefix}`;
-  for (let i = 0; i < length; i++) {
-    const keys = keySets[random(0, keySets.length)];
-    hash += keys[random(0, keys.length)];
+
+  // let hash = `${prefix}`;
+  // for (let i = 0; i < length; i++) {
+  //   const keys = keySets[random(0, keySets.length)];
+  //   hash += keys[random(0, keys.length)];
+  // }
+  // hash += suffix;
+  let hash;
+  if (count) {
+    hash = [];
+    for (let i = 0; i < count; i++) {
+      for (let j = 0; j < length; j++) {
+        const keys = keySets[random(0, keySets.length)];
+        const key = keys[random(0, keys.length)];
+        hash[i] = hash[i] ? (hash[i] = hash[i] += key) : (hash[i] = key);
+      }
+    }
+    hash.map((el) => prefix + el + suffix);
+  } else {
+    hash = `${prefix}`;
+    for (let i = 0; i < length; i++) {
+      const keys = keySets[random(0, keySets.length)];
+      const key = keys[random(0, keys.length)];
+      hash += key;
+    }
+    hash += suffix;
   }
-  hash += suffix;
   if (hashes) {
     if (typeof hashes === "string") {
-      if (hash === hashes) return idGenerator(config);
+      if (typeof hash === "string" && hash === hashes)
+        return idGenerator(config);
+      else if (Array.isArray(hash) && hash.some((el) => el === hashes))
+        return idGenerator(config);
     } else {
-      if (hashes.includes(hash)) return idGenerator(config);
+      if (typeof hash === "string" && hashes.includes(hash))
+        return idGenerator(config);
+      else if (
+        Array.isArray(hash) &&
+        hash.some((el) => hashes.some((el2) => el === el2))
+      )
+        return idGenerator(config);
     }
   }
   return hash;
