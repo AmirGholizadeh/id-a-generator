@@ -110,3 +110,45 @@ describe("it should throw errors", () => {
     );
   });
 });
+
+describe("play with options", () => {
+  it("should return a 4 length lowercase hash", () => {
+    const hash = idGenerator({ length: 4 });
+    expect(hash.match(/[A-Z]|\d/)).toBeNull();
+    expect(hash.length).toBe(4);
+  });
+  it("should return a 10 length uppercase hash", () => {
+    const hash = idGenerator({ length: 10, uppercase: true, lowercase: false });
+    expect(hash.match(/[a-z]|\d/)).toBeNull();
+    expect(hash.length).toBe(10);
+  });
+  it("should return a 5 length lowercase and uppercase hash", () => {
+    const hash = idGenerator({ length: 5, uppercase: true });
+    expect(hash.match(/\d/)).toBeNull();
+    expect(hash.match(/[a-z]/)).not.toBeNull();
+    expect(hash.match(/[A-Z]/)).not.toBeNull();
+    expect(hash.length).toBe(5);
+  });
+  it("should return a 1 length number", () => {
+    const hash = idGenerator({ length: 1, numbers: true, lowercase: false });
+    expect(hash.match(/\d/)).not.toBeNull();
+    expect(hash.match(/[A-z]/)).toBeNull();
+    expect(hash.length).toBe(1);
+  });
+  it("should return 5 hashes of 10 length lowercase and uppercase", () => {
+    const hashes = idGenerator({ length: 10, count: 5, uppercase: true });
+    expect(Array.isArray(hashes)).toBeTruthy();
+    expect(hashes.length).toBe(5);
+    const checkLetters = () => {
+      hashes.every((hash) => {
+        if (
+          hash.match(/[A-Z]/) &&
+          hash.match(/[a-z]/ && !hash.match(/\d/ && hash.length === 5))
+        )
+          return true;
+        return false;
+      });
+    };
+    expect(checkLetters).toBeTruthy();
+  });
+});
