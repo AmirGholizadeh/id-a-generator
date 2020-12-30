@@ -1,7 +1,7 @@
 const handleErrors = require("./handleErrors");
 const generateKeyset = require("./generateKeyset");
 const generateMultipleHashes = require("./generateMultipleHashes");
-const generateAHash = require("./genereateAHash");
+const generateAHash = require("./generateAHash");
 const handleDuplicate = require("./handleDuplicate");
 
 const idGenerator = (config) => {
