@@ -14,7 +14,9 @@
   "main": "index.js",
   "scripts": {
     "watch:js": "esw --fix --watch --ext .js",
-    "test": "jest"
+    "test": "jest",
+    "build":"webpack --config webpack.prod.js",
+    "dev":"webpack -w --config webpack.dev.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,12 @@
   },
   "homepage": "https://github.com/AmirGholizadeh/id-a-generator#readme",
   "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-minify-simplify": "^0.5.1",
     "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
