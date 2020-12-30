@@ -1,0 +1,7 @@
+.eslintignore
+.eslintrc
+babel.config.json
+webpack*
+node_modules/
+test/
+src/
