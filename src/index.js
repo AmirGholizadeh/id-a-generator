@@ -1,5 +1,5 @@
 const handleErrors = require("./handleErrors");
-const random = (from, to) => Math.floor(Math.random() * (to - from) + from);
+const random = require("./random");
 const idGenerator = (config) => {
   // DEAFULT
   let {
