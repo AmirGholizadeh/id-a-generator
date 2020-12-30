@@ -1,3 +1,4 @@
+const handleErrors = require("./handleErrors");
 const random = (from, to) => Math.floor(Math.random() * (to - from) + from);
 const idGenerator = (config) => {
   // DEAFULT
@@ -13,45 +14,8 @@ const idGenerator = (config) => {
   } = config;
   prefix = prefix ? prefix : "";
   suffix = suffix ? suffix : "";
-  // ERRORS
-  // valid length
-  if (!length) throw new Error("specify a length");
-  if (length <= 0) throw new Error("length must not be equal or lower than 0");
-  if (typeof length !== "number")
-    throw new Error("type of property length is number");
-  // valid prefix and suffix
-  if (typeof prefix !== "string")
-    throw new Error("type of property prefix is string");
-  if (typeof suffix !== "string")
-    throw new Error("type of property suffix is string");
-  // valid keySets
-  if (numbers !== undefined && typeof numbers !== "boolean")
-    throw new Error("type of property numbers is boolean");
-  if (uppercase !== undefined && typeof uppercase !== "boolean")
-    throw new Error("type of property uppercase is boolean");
-  if (lowercase !== undefined && typeof lowercase !== "boolean")
-    throw new Error("type of property lowercase is boolean");
-  // valid hashes
-  if (hashes) {
-    if (typeof hashes !== "string" && !Array.isArray(hashes))
-      throw new Error(
-        "type of property hashes must be string or an array of strings"
-      );
-    if (Array.isArray(hashes)) {
-      if (!hashes.every((el) => typeof el === "string"))
-        throw new Error("array hashes must include only string elements");
-    }
-  }
-  // at least one specified keyset
-  if (lowercase !== true && uppercase !== true && numbers !== true)
-    throw new Error(
-      "you should specify at least one key set to generate an ID"
-    );
-  // valid count
-  if (count && typeof count !== "number")
-    throw new Error("type of property count is number");
-  if (count && count <= 0)
-    throw new Error("count must not be equal or lower than 0");
+  // HANDLE ERRORS
+  handleErrors(Object.assign({}, config, { lowercase, prefix, suffix }));
   // KEYSETS
   const lowercaseKeys = [
     "q",
