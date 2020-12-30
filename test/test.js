@@ -1,4 +1,4 @@
-const idGenerator = require("./index");
+const idGenerator = require("./../dist/idGenerator");
 
 describe("it should return a valid value", () => {
   const hash = idGenerator({ length: 4 });
