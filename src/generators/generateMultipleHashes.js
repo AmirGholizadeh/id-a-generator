@@ -1,4 +1,4 @@
-const random = require("./random");
+const random = require("./../utils/random");
 module.exports = ({ length, count, keyset, prefix, suffix }) => {
   const hash = [];
   for (let i = 0; i < count; i++) {

@@ -1,8 +1,11 @@
-const handleErrors = require("./handleErrors");
-const generateKeyset = require("./generateKeyset");
-const generateMultipleHashes = require("./generateMultipleHashes");
-const generateAHash = require("./generateAHash");
-const handleDuplicate = require("./handleDuplicate");
+// handlers
+const handleErrors = require("./handlers/handleErrors");
+const handleDuplicate = require("./handlers/handleDuplicate");
+// generator
+const generateAHash = require("./generators/generateAHash");
+const generateMultipleHashes = require("./generators/generateMultipleHashes");
+const generateKeyset = require("./generators/generateKeyset");
+// utils
 
 const idGenerator = (config) => {
   // DEAFULT
