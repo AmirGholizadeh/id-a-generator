@@ -1,4 +1,5 @@
 const handleErrors = require("./handleErrors");
+const generateKeyset = require("./generateKeyset");
 const random = require("./random");
 const idGenerator = (config) => {
   // DEAFULT
@@ -14,51 +15,17 @@ const idGenerator = (config) => {
   } = config;
   prefix = prefix ? prefix : "";
   suffix = suffix ? suffix : "";
-  // HANDLE ERRORS
+  // handle errors
   handleErrors(Object.assign({}, config, { lowercase, prefix, suffix }));
-  // KEYSETS
-  const lowercaseKeys = [
-    "q",
-    "w",
-    "e",
-    "r",
-    "t",
-    "y",
-    "u",
-    "i",
-    "o",
-    "p",
-    "a",
-    "s",
-    "d",
-    "f",
-    "g",
-    "h",
-    "j",
-    "k",
-    "l",
-    "z",
-    "x",
-    "c",
-    "v",
-    "b",
-    "n",
-    "m",
-  ];
-  const uppercaseKeys = lowercaseKeys.map((el) => el.toUpperCase());
-  const numberKeys = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  // push specified keys to the array
-  const keySets = keySets
-    .concat(lowercase ? [lowercaseKeys] : [])
-    .concat(uppercase ? [uppercaseKeys] : [])
-    .concat(numbers ? [numberKeys] : []);
+  // generate keyset
+  const keyset = generateKeyset({ lowercase, uppercase, numbers });
   // GENERATE
   let hash;
   if (count) {
     hash = [];
     for (let i = 0; i < count; i++) {
       for (let j = 0; j < length; j++) {
-        const keys = keySets[random(0, keySets.length)];
+        const keys = keyset[random(0, keyset.length)];
         const key = keys[random(0, keys.length)];
         hash[i] = hash[i] ? (hash[i] = hash[i] += key) : (hash[i] = key);
       }
@@ -67,7 +34,7 @@ const idGenerator = (config) => {
   } else {
     hash = `${prefix}`;
     for (let i = 0; i < length; i++) {
-      const keys = keySets[random(0, keySets.length)];
+      const keys = keyset[random(0, keyset.length)];
       const key = keys[random(0, keys.length)];
       hash += key;
     }
