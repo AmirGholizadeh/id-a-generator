@@ -53,13 +53,6 @@ const idGenerator = (config) => {
   if (uppercase) keySets.push(uppercaseKeys);
   if (numbers) keySets.push(numberKeys);
   // GENERATE
-
-  // let hash = `${prefix}`;
-  // for (let i = 0; i < length; i++) {
-  //   const keys = keySets[random(0, keySets.length)];
-  //   hash += keys[random(0, keys.length)];
-  // }
-  // hash += suffix;
   let hash;
   if (count) {
     hash = [];
