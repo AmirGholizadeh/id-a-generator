@@ -5,5 +5,16 @@ module.exports = {
   output:{
     filename:'idGenerator.js',
     path:path.join(__dirname, 'dist/')
+  },
+  module:{
+    rules:[
+      {
+        use:/\.js$/,
+        exclude:/node_modules/,
+        use:{
+          loader:'babel-loader'
+        }
+      }
+    ]
   }
 }
