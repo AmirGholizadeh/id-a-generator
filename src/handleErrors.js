@@ -11,11 +11,11 @@ const handleErrors = (config) => {
   if (typeof config.suffix !== "string")
     throw new Error("type of property suffix is string");
   // valid keySets
-  if (config.numbers !== undefined && typeof config.numbers !== "boolean")
+  if (config.numbers && typeof config.numbers !== "boolean")
     throw new Error("type of property numbers is boolean");
-  if (config.uppercase !== undefined && typeof config.uppercase !== "boolean")
+  if (config.uppercase && typeof config.uppercase !== "boolean")
     throw new Error("type of property uppercase is boolean");
-  if (config.lowercase !== undefined && typeof config.lowercase !== "boolean")
+  if (config.lowercase && typeof config.lowercase !== "boolean")
     throw new Error("type of property lowercase is boolean");
   // valid hashes
   if (config.hashes) {
