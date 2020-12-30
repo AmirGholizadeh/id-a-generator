@@ -11,7 +11,7 @@
     "id-a-generator",
     "devamirgh"
   ],
-  "main": "index.js",
+  "main": "dist/idGenerator.js",
   "scripts": {
     "watch:js": "esw --fix --watch --ext .js",
     "test": "jest",
