@@ -47,11 +47,11 @@ const idGenerator = (config) => {
   ];
   const uppercaseKeys = lowercaseKeys.map((el) => el.toUpperCase());
   const numberKeys = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const keySets = [];
   // push specified keys to the array
-  if (lowercase) keySets.push(lowercaseKeys);
-  if (uppercase) keySets.push(uppercaseKeys);
-  if (numbers) keySets.push(numberKeys);
+  const keySets = keySets
+    .concat(lowercase ? [lowercaseKeys] : [])
+    .concat(uppercase ? [uppercaseKeys] : [])
+    .concat(numbers ? [numberKeys] : []);
   // GENERATE
   let hash;
   if (count) {
